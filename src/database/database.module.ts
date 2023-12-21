@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CategoryEntity } from 'src/category/entities/category.entity';
 import { ProductEntity } from 'src/product/entities/product.entity';
 import { DataSourceOptions } from 'typeorm';
 
@@ -10,7 +11,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: 'postgres',
   password: 'docker',
   database: 'apigen',
-  entities: [ProductEntity],
+  entities: [ProductEntity, CategoryEntity],
   synchronize: true,
 };
 
