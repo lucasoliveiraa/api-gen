@@ -1,7 +1,11 @@
+import { CategoryEntity } from 'src/category/entities/category.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -15,6 +19,9 @@ export class ProductEntity {
   @Column({ name: 'name', nullable: false })
   name: string;
 
+  @Column({ name: 'category_id', nullable: false })
+  categoryId: string;
+
   @Column({ name: 'description', nullable: false })
   description: string;
 
@@ -26,6 +33,13 @@ export class ProductEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(
+    () => CategoryEntity,
+    (category: CategoryEntity) => category.products,
+  )
+  @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
+  category?: CategoryEntity;
 
   constructor() {
     if (!this.id) {

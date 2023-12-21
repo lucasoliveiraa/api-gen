@@ -7,37 +7,52 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { DeleteResult } from 'typeorm';
 import { ProductService } from './product.service';
 import { CreateProduct } from './dto/create-product.dto';
 import { UpdateProduct } from './dto/update-product.dto';
+import { ReturnProduct } from './dto/return-product.dto';
+import { ProductEntity } from './entities/product.entity';
 
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  async findAll(): Promise<ReturnProduct[]> {
+    return (await this.productService.findAll([], true)).map(
+      (product) => new ReturnProduct(product),
+    );
   }
 
-  @Get(':id')
-  findOne(@Param(':id') id: string) {
-    return this.productService.findOne(id);
+  @Get('/:productId')
+  async findProductById(
+    @Param('productId') productId: string,
+  ): Promise<ReturnProduct> {
+    return new ReturnProduct(
+      await this.productService.findProductById(productId, true),
+    );
   }
 
   @Post()
-  create(@Body() createProduct: CreateProduct) {
-    console.log('contro', createProduct);
+  async createProduct(
+    @Body() createProduct: CreateProduct,
+  ): Promise<ProductEntity> {
     return this.productService.create(createProduct);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateProduct: UpdateProduct) {
-    return this.productService.update(id, updateProduct);
+  @Put('/:productId')
+  async updateProduct(
+    @Body() updateProduct: UpdateProduct,
+    @Param('productId') productId: string,
+  ): Promise<ProductEntity> {
+    return this.productService.update(productId, updateProduct);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.remove(id);
+  @Delete('/:productId')
+  async deleteProduct(
+    @Param('productId') productId: string,
+  ): Promise<DeleteResult> {
+    return this.productService.remove(productId);
   }
 }
