@@ -14,11 +14,20 @@ $ http://localhost:3000/api
 # Installation
 $ yarn install
 
+# Docker
+$ docker compose up -d
+
 # development
 $ yarn start
 
 # watch mode
 $ yarn start:dev
+
+# Route product
+$ http://localhost:3000/product
+
+# Route category
+$ http://localhost:3000/category
 ```
 
 ## ✔️ Test
