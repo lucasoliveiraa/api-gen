@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryEntity } from 'src/category/entities/category.entity';
-import { ProductEntity } from 'src/product/entities/product.entity';
+import { CategoryEntity } from '../category/entities/category.entity';
+import { ProductEntity } from '../product/entities/product.entity';
 import { DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {

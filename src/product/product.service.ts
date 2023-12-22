@@ -9,7 +9,7 @@ import { UpdateProduct } from './dto/update-product.dto';
 import { DeleteResult, In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
-import { CategoryService } from 'src/category/category.service';
+import { CategoryService } from '../category/category.service';
 
 @Injectable()
 export class ProductService {
@@ -67,8 +67,7 @@ export class ProductService {
   async create(createProduct: CreateProduct): Promise<ProductEntity> {
     await this.categoryService.findCategoryById(createProduct.categoryId);
 
-    const product = this.productRepository.create(createProduct);
-    return this.productRepository.save(product);
+    return this.productRepository.save(createProduct);
   }
 
   async update(
